@@ -47,11 +47,34 @@ def imagenes_RGB(fin, fout_R, fout_G, fout_B ) :
     image_G.save(fout_G,"JPEG")
     image_B.save(fout_B,"JPEG")
 
-def imagenes_BW(fin, fout):
+def imagen_BW(fin, fout):
     image= Image.open(fin).convert("L") #de esta manera convertimos a escala de grises
     image.save(fout,"JPEG")
+
+def imagen_borrosa(fin, fout):
+    image = cv.imread(fin)
+    #usamos un filtro pasa-bajos gausiano para conseguir que la imagen sea borrosa
+    imagen_borrosa = cv.GaussianBlur(image,(7,7), 0) #(7,7) es el tamaño del kernel y 0 la sigma
+
+    cv.imwrite(fout, imagen_borrosa)
+
+
+def imagen_zoom(fin, fout, factor_zoom):
+    image = cv.imread(fin)
+
+    ancho, alto = image.shape[:2]
+
+    nuevo_ancho = int(ancho * factor_zoom)
+    nuevo_alto = int(alto * factor_zoom)
+
+    imagen_zoom= cv.resize(image, (nuevo_ancho,nuevo_alto))
+
+    cv.imwrite(fout,imagen_zoom)
+
 
 #PRUEBAS
 imagenes_RGB("image/water.jpg", "resultat/red_w.jpg", "resultat/green_w.jpg", "resultat/blue_w.jpg")
 imagenes_RGB("image/colors.png", "resultat/red_c.jpg", "resultat/green_c.jpg", "resultat/blue_c.jpg")
-imagenes_BW("image/water.jpg", "resultat/water_bw.jpg")
+imagen_BW("image/water.jpg", "resultat/water_bw.jpg")
+imagen_borrosa("image/water.jpg", "resultat/water_blur.jpg")
+imagen_zoom("image/water.jpg", "resultat/water_zoom.jpg", 15.0)
