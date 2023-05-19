@@ -5,7 +5,11 @@ Treball Final: Ada Salvador Avalos i Milene Soledad Granda Becerra
 #pip install opencv-python
 import cv2 as cv
 #pip install pillow
-from PIL import Image
+from PIL import Image, ImageTk
+#visuales
+import tkinter as tk
+#clase hecha para poder hacer el zoom en la imagen
+from Zoom import ImagenZoom
 
 def componentes_rgb(fin) :
     image = Image.open(fin)
@@ -59,34 +63,16 @@ def imagen_borrosa(fin, fout):
     cv.imwrite(fout, imagen_borrosa)
 
 
-def imagen_zoom(fin, fout, factor_zoom):
-    image = cv.imread(fin)
-
-    ancho, alto = image.shape[:2]
-
-    nuevo_ancho = int(ancho * factor_zoom)
-    nuevo_alto = int(alto * factor_zoom)
-
-    imagen_zoom= cv.resize(image, (nuevo_ancho,nuevo_alto))
-
-    cv.imwrite(fout,imagen_zoom)
-
-def imagen_zoomout(fin, fout, factor_zoom):
-    image = cv.imread(fin)
-
-    ancho, alto = image.shape[:2]
-
-    nuevo_ancho = int(ancho / factor_zoom)
-    nuevo_alto = int(alto / factor_zoom)
-
-    imagen_zoom= cv.resize(image, (nuevo_ancho,nuevo_alto))
-
-    cv.imwrite(fout,imagen_zoom)
 
 #PRUEBAS
 imagenes_RGB("image/water.jpg", "resultat/red_w.jpg", "resultat/green_w.jpg", "resultat/blue_w.jpg")
 imagenes_RGB("image/colors.png", "resultat/red_c.jpg", "resultat/green_c.jpg", "resultat/blue_c.jpg")
 imagen_BW("image/water.jpg", "resultat/water_bw.jpg")
 imagen_borrosa("image/water.jpg", "resultat/water_blur.jpg")
-imagen_zoom("image/water.jpg", "resultat/water_zoom.jpg", 6.0)
-imagen_zoomout("image/water.jpg", "resultat/water_zoomout.jpg", 6.0)
+#prueba zoom :
+raiz = tk.Tk()
+raiz.geometry('800x600')
+imagen = ImagenZoom(raiz)
+imagen.pack(fill= tk.BOTH, expand= tk.YES)
+imagen.set_imagen("image/water.jpg")
+raiz.mainloop()
