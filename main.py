@@ -7,3 +7,5 @@ from tkinter.ttk import Combobox
 from Zoom import ImagenZoom
 from fewfilters import Fewfilters
 
+class main:
+    pass
