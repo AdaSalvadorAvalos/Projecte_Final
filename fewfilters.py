@@ -5,15 +5,17 @@ Treball Final: Ada Salvador Avalos i Milene Soledad Granda Becerra
 #pip install opencv-python
 import cv2 as cv
 #pip install pillow
-from PIL import Image
-#visuales
-import tkinter as tk
-#clase hecha para poder hacer el zoom en la imagen
-from Zoom import ImagenZoom
+from PIL import Image, ImageFilter
 
-class Fewfilters:
+
+class Fewfilters:  
     @staticmethod
     def componentes_rgb(fin) :
+        """
+        Función que como argumento recibe el archivo de la imagen y devuelve una lista con las componentes R,G,B por 
+        separado.
+        
+        """
         image = Image.open(fin)
         #convierte a RGB dado que contenedores como png no usan estos componentes.
         image = image.convert("RGB")
@@ -30,10 +32,13 @@ class Fewfilters:
 
     @staticmethod
     def imagenes_RGB(fin, fout_R, fout_G, fout_B ) :
+        """
+        Función que recibe como argumentos la dirección del archivo de la imagen que queremos separar
+        por componentes R,G,B y la dirección de las tres imágenes pasadas a jpeg, cada una con una 
+        lista de un componente R, G, B, respectivamente.
+        """
         rgb_componentes = Fewfilters.componentes_rgb(fin)
         image =Image.open(fin)
-
-        nombre_archivo, nom_extension = fin.split('.')
 
         #creamos una imagen en blanco
         image_R = Image.new("RGB", image.size)
@@ -56,29 +61,83 @@ class Fewfilters:
 
     @staticmethod
     def imagen_BW(fin, fout):
+        """
+        Función que transforma una imagen de entrada en esa misma imagen pero en escala de grises.
+        Como entrada tenemos la dirección del archivo que queremos pasar a escala de grises y la direción de la imagen
+        trasformada.
+
+        """
         image= Image.open(fin).convert("L") #de esta manera convertimos a escala de grises
         image.save(fout,"JPEG")
 
     @staticmethod
     def imagen_borrosa(fin, fout):
+        """
+        Función filtra la señal con un filtro pasa-bajos guasiano de manera que la imagen que guardamos nueva
+        parece borrosa.
+        Como argumentos tenemos la dirección del archivo que queremos filtrar y la dirección del archivo filtrado. 
+        """
         image = cv.imread(fin)
         #usamos un filtro pasa-bajos gausiano para conseguir que la imagen sea borrosa
         imagen_borrosa = cv.GaussianBlur(image,(7,7), 0) #(7,7) es el tamaño del kernel y 0 la sigma
 
         cv.imwrite(fout, imagen_borrosa)
 
+    @staticmethod
+    def imagen_sharpen(fin,fout):
+        imagen = Image.open(fin)
+        imagen_detalle = imagen.filter(ImageFilter.EDGE_ENHANCE)
+        imagen_detalle.save(fout, "JPEG")
 
-"""
+    @staticmethod
+    def imagen_contorno(fin,fout):
+        imagen = Image.open(fin)
+        imagen_contorno = imagen.filter(ImageFilter.CONTOUR)
+        imagen_contorno.save(fout, "JPEG")
+
+    @staticmethod
+    def imagen_EMBOSS(fin,fout):
+        imagen = Image.open(fin)
+        imagen_EMBOSS = imagen.filter(ImageFilter.EMBOSS)
+        imagen_EMBOSS.save(fout, "JPEG")
+    
+    @staticmethod
+    def imagen_edges(fin,fout):
+        imagen = Image.open(fin)
+        resultado = imagen.filter(ImageFilter.FIND_EDGES)
+        resultado.save(fout, "JPEG")
+    
+    @staticmethod
+    def imagen_modefilter(fin, fout):
+
+        imagen = Image.open(fin)
+        resultado = imagen.filter(ImageFilter.ModeFilter(size=9))
+        resultado.save(fout, "JPEG")
+
+    @staticmethod
+    def transformada_dft(fin,fout):
+        pass
     #PRUEBAS
-    imagenes_RGB("image/water.jpg", "resultat/red_w.jpg", "resultat/green_w.jpg", "resultat/blue_w.jpg")
-    imagenes_RGB("image/colors.png", "resultat/red_c.jpg", "resultat/green_c.jpg", "resultat/blue_c.jpg")
-    imagen_BW("image/water.jpg", "resultat/water_bw.jpg")
-    imagen_borrosa("image/water.jpg", "resultat/water_blur.jpg")
+    
+filtro = Fewfilters()
+"""
+filtro.imagenes_RGB("image/water.jpg", "resultat/red1_w.jpg", "resultat/green1_w.jpg", "resultat/blue1_w.jpg")
+filtro.imagenes_RGB("image/colors.png", "resultat/red1_c.jpg", "resultat/green1_c.jpg", "resultat/blue1_c.jpg")
+filtro.imagen_BW("image/water.jpg", "resultat/water1_bw.jpg")
+filtro.imagen_borrosa("image/water.jpg", "resultat/water1_blur.jpg")
+
+filtro.imagen_sharpen("image/water.jpg", "resultado/sharp.jpg")
+filtro.imagen_contorno("image/water.jpg", "resultado/contorno.jpg")
+filtro.imagen_EMBOSS("image/water.jpg", "resultado/EMBOSS.jpg")
+filtro.imagen_edges("image/water.jpg", "resultado/EDGES.jpg")
+filtro.imagen_modefilter("image/water.jpg", "resultado/mode.jpg")
+"""
     #prueba zoom :
+"""
     raiz = tk.Tk()
     raiz.geometry('800x600')
     imagen = ImagenZoom(raiz)
     imagen.pack(fill= tk.BOTH, expand= tk.YES)
     imagen.set_imagen("image/water.jpg")
     raiz.mainloop()
-    """
+ """
