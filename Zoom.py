@@ -75,11 +75,15 @@ class ImagenZoom(tk.Canvas) : # deriva de la clase tk.Canvas para tener una áre
         - self: instáncia de la clase, para poder acceder a los métodos de la clase.
         - event : es el objeto del evento que provocó la acción del zoom.(Con el ratón o un botón)
         """
-        if event.delta > 0:
-            self.factor_zoom *= 1.1
-        else :
-            self.factor_zoom *= 0.9
-        self.actualizar_imagen()
+        if event.delta > 0: # si delta es más grande que 0 significa que se ha movido la rueda del ratón hacía arriba 
+            # o se ha picado al botón de zoom-in
+            self.factor_zoom *= 1.1 #por tanto se multiplicará el factor de zoom por 1.1 , esto hace que el nivel del zoom
+            #incremente un 10%
+        else : # si delta es más pequeña que 0 significa que se ha movido la rueda del ratón hacía abajo 
+            # o se ha picado al botón de zoom-out
+            self.factor_zoom *= 0.9 # por tanto se multiplicará el factor de zoom por 0.9 , esto hace que el nivel del zoom
+            #disminuya un 10%
+        self.actualizar_imagen() #actualiza la imagen a tiempo real
 
 
     def ResetZoom(self):
