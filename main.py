@@ -37,44 +37,44 @@ def aplicar_filtro():
     HideFiltersOptions()
     valor_selec = combo.get()
    # direccion_archivo = abrir_archivos()
-    if valor_selec == 'rgb' :
+    if valor_selec == 'RGB' :
         comboRGB.current(0)
         comboRGB.place(x=0, y=75,width=200, height= 30)
         filtro = Fewfilters()
         filtro.imagenes_RGB(direccion_archivo, "resultado/red.jpg", "resultado/green.jpg", "resultado/blue.jpg")
 
-    elif valor_selec == 'bw' :
+    elif valor_selec == 'BW' :
         filtro = Fewfilters()
         filtro.imagen_BW(direccion_archivo, "resultado/bw.jpg")
         image =Image.open("resultado/bw.jpg")
         canvas.set_imagen("resultado/bw.jpg")
 
-    elif valor_selec == 'blur' :
+    elif valor_selec == 'Blur' :
         filtro = Fewfilters()
         filtro.imagen_borrosa(direccion_archivo, "resultado/blur.jpg")
         canvas.set_imagen("resultado/blur.jpg")
 
-    elif valor_selec == 'edges' :
+    elif valor_selec == 'Edges' :
         filtro = Fewfilters()
         filtro.imagen_edges(direccion_archivo, "resultado/edges.jpg")
         canvas.set_imagen("resultado/edges.jpg")
 
-    elif valor_selec == 'mode' :
+    elif valor_selec == 'ModeFilter' :
         filtro = Fewfilters()
         filtro.imagen_modefilter(direccion_archivo, "resultado/mode.jpg")
         canvas.set_imagen("resultado/mode.jpg")
 
-    elif valor_selec == 'emboss' :
+    elif valor_selec == 'Emboss' :
         filtro = Fewfilters()
         filtro.imagen_EMBOSS(direccion_archivo, "resultado/emboss.jpg")
         canvas.set_imagen("resultado/emboss.jpg")
 
-    elif valor_selec == 'sharp' :
+    elif valor_selec == 'Sharpen' :
         filtro = Fewfilters()
         filtro.imagen_sharpen(direccion_archivo, "resultado/sharp.jpg")
         canvas.set_imagen("resultado/sharp.jpg")
 
-    elif valor_selec == 'contorno' :
+    elif valor_selec == 'Contour' :
         filtro = Fewfilters()
         filtro.imagen_contorno(direccion_archivo, "resultado/contorno.jpg")
         canvas.set_imagen("resultado/contorno.jpg")
@@ -124,7 +124,7 @@ boton.place(x=0, y=0,width=200, height= 30)
 
 
 combo = Combobox(ventana)
-combo['values'] = ('Selecciona Filtro', 'rgb', 'bw', 'blur', 'contorno', 'edges', 'emboss', 'sharp','mode')
+combo['values'] = ('Selecciona Filtro', 'RGB', 'BW', 'Blur', 'Contour', 'Edges', 'Emboss', 'Sharpen','ModeFilter')
 combo.current(0)
 combo.place(x=0, y=25,width=200, height= 30)
 combo.bind("<<ComboboxSelected>>", on_combobox_change)
