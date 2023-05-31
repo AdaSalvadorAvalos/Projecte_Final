@@ -8,7 +8,7 @@ from tkinter import messagebox
 from tkinter.ttk import Combobox
 from PIL import Image, ImageTk
 #clases hechas para el programa
-from Zoom import ImagenZoom
+from Zoom import ImagenZoom 
 from fewfilters import Fewfilters
 
 #inicializamos las variables globales de manera que se pueden usar en todo el código los mismos objetos.
