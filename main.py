@@ -210,7 +210,7 @@ def on_resize(event):
 #ventana principal
 ventana = tk.Tk()
 ventana.geometry("1000x600")
-ventana.title("Proyecto APA")
+ventana.title("Slikam")
 # cambio de tamaño si es necesario. Si hay un "evento"
 ventana.bind('<Configure>', on_resize)
 
