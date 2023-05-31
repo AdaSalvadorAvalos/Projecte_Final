@@ -1,3 +1,7 @@
+"""
+Treball Final: Ada Salvador Avalos i Milene Soledad Granda Becerra
+
+"""
 import tkinter as tk
 from PIL import Image, ImageTk
 
