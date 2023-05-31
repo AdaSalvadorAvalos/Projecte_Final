@@ -161,7 +161,10 @@ class Fewfilters:
         f = np.fft.fft2(imagen) #hace la transformada de fourier  rápida en 2D
         ffshift = np.fft.fftshift(f) # mueve el componente de 0 frecuencia al centro del espectro
         G = 20 * np.log(np.abs(ffshift))  # para ver la representación de manera logarítmica
+        plt.figure()
         plt.imshow(G, cmap='gray')
+        #plt.show(G)
+        
         plt.savefig(fout)
 
 
@@ -178,7 +181,8 @@ class Fewfilters:
         # de la librería OpenCV. [imagen] : imagen de la que queremos calcular el histograma.[0]: indice del canal, en este caso
         # es 0 porque solo se quiere calcular del primer canal.None :máscara, ponemos None porque consideramos todos los pixeles(sin máscara) 
         # [256] : numero de bins que usamos. [0, 256] : rango de valores de pixeles  
-        plt.plot(hist) 
+        plt.figure() 
+        plt.plot(hist)
         plt.savefig(fout) # guarda la imagen de salida
 
     #PRUEBAS
